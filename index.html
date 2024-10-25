@@ -3,73 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tebak Angka</title>
+    <title>Tic Tac Toe</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 50px;
-        }
-        input {
-            padding: 10px;
-            margin: 10px;
-            width: 100px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .board { display: grid; grid-template-columns: repeat(3, 100px); grid-gap: 5px; margin: 20px auto; }
+        .cell { width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: #e7e7e7; cursor: pointer; }
+        .message { margin-top: 20px; }
     </style>
 </head>
 <body>
-    <h1>Game Tebak Angka</h1>
-    <p>Tebak angka antara 1 hingga 100</p>
-    <input type="number" id="guess" min="1" max="100" placeholder="Tebak...">
-    <button onclick="checkGuess()">Tebak!</button>
-
+    <h1>Tic Tac Toe</h1>
+    <div class="board" id="board"></div>
     <div class="message" id="message"></div>
-    <button id="restart" style="display:none;" onclick="restartGame()">Main Lagi</button>
+    <button onclick="restartGame()">Main Lagi</button>
 
     <script>
-        let randomNumber = Math.floor(Math.random() * 100) + 1;
-        let attempts = 0;
+        const boardElement = document.getElementById('board');
+        const messageElement = document.getElementById('message');
+        let board = Array(9).fill(null);
+        let currentPlayer = 'X';
 
-        function checkGuess() {
-            const userGuess = Number(document.getElementById('guess').value);
-            attempts++;
-            const messageElement = document.getElementById('message');
+        function createBoard() {
+            boardElement.innerHTML = '';
+            board.forEach((cell, index) => {
+                const cellElement = document.createElement('div');
+                cellElement.classList.add('cell');
+                cellElement.textContent = cell;
+                cellElement.onclick = () => makeMove(index);
+                boardElement.appendChild(cellElement);
+            });
+        }
 
-            if (userGuess === randomNumber) {
-                messageElement.textContent = `Selamat! Anda menebak angka ${randomNumber} dalam ${attempts} percobaan.`;
-                document.getElementById('restart').style.display = 'block';
-            } else if (userGuess < randomNumber) {
-                messageElement.textContent = 'Terlalu rendah! Coba lagi.';
-            } else {
-                messageElement.textContent = 'Terlalu tinggi! Coba lagi.';
+        function makeMove(index) {
+            if (!board[index]) {
+                board[index] = currentPlayer;
+                if (checkWinner()) {
+                    messageElement.textContent = `${currentPlayer} menang!`;
+                } else if (board.every(cell => cell)) {
+                    messageElement.textContent = 'Seri!';
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                }
+                createBoard();
             }
         }
 
-        function restartGame() {
-            randomNumber = Math.floor(Math.random() * 100) + 1;
-            attempts = 0;
-            document.getElementById('message').textContent = '';
-            document.getElementById('guess').value = '';
-            document.getElementById('restart').style.display = 'none';
+        function checkWinner() {
+            const winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            return winningCombinations.some(combination => {
+                const [a, b, c] = combination;
+                return board[a] && board[a] === board[b] && board[a] === board[c];
+            });
         }
+
+        function restartGame() {
+            board = Array(9).fill(null);
+            currentPlayer = 'X';
+            messageElement.textContent = '';
+            createBoard();
+        }
+
+        createBoard();
     </script>
 </body>
 </html>
