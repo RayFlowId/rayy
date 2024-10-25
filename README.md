@@ -1,3 +1,0 @@
-# Tiktok-Downloader
-
-RAYY PROJECT
