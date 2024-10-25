@@ -1,112 +1,42 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Sederhana</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Unduh Video TikTok</title>
+    <link rel="stylesheet" href="styles.css"> <!-- CSS jika diperlukan -->
 </head>
 <body>
+    <div class="container">
+        <h1>Unduh Video TikTok</h1>
+        <p>Masukkan URL video TikTok yang ingin Anda unduh:</p>
+        
+        <form action="/download" method="POST">
+            <label for="tiktok-url">URL Video TikTok:</label>
+            <input type="url" id="tiktok-url" name="tiktok-url" required placeholder="Contoh: https://www.tiktok.com/@username/video/1234567890">
+            <input type="submit" value="Unduh">
+        </form>
 
-<header>
-    <h1>Selamat Datang di Website Sederhana</h1>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">Tentang</a></li>
-            <li><a href="#services">Layanan</a></li>
-            <li><a href="#contact">Kontak</a></li>
-        </ul>
-    </nav>
-</header>
+        <div id="result" style="display:none;">
+            <h2>Link Unduhan:</h2>
+            <a id="download-link" href="#" download>Download Video</a>
+        </div>
+    </div>
 
-<main>
-    <section id="home">
-        <h2>Home</h2>
-        <p>Ini adalah contoh website sederhana untuk pemula.</p>
-    </section>
-    
-    <section id="about">
-        <h2>Tentang Kami</h2>
-        <p>Kami adalah perusahaan yang menyediakan layanan web development dan tutorial.</p>
-    </section>
+    <script>
+        // Skrip untuk menampilkan link unduhan setelah formulir dikirim
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const url = document.getElementById('tiktok-url').value;
 
-    <section id="services">
-        <h2>Layanan Kami</h2>
-        <ul>
-            <li>Pembuatan Website</li>
-            <li>Pengembangan Aplikasi Seluler</li>
-            <li>Konsultasi IT</li>
-        </ul>
-    </section>
+            // Logika untuk mendapatkan link unduhan dari server
+            // Di sini Anda perlu menambahkan kode untuk memproses URL
 
-    <section id="contact">
-        <h2>Kontak Kami</h2>
-        <p>Email: info@email.com</p>
-        <p>Telepon: (123) 456-7890</p>
-    </section>
-</main>
-
-<footer>
-    <p>&copy; 2023 Website Sederhana. Semua hak dilindungi.</p>
-</footer>
-
+            // Contoh: Mengupdate link unduhan (hanya sebagai ilustrasi)
+            const downloadLink = document.getElementById('download-link');
+            downloadLink.href = `https://www.example.com/download?url=${encodeURIComponent(url)}`;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
-```
-
-### Kode Sumber CSS (style.css)
-
-```css
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4; /* Latar belakang abu-abu */
-}
-
-header {
-    background-color: #333; /* Warna latar belakang header */
-    color: white; /* Warna teks header */
-    padding: 10px 0; /* Padding vertikal */
-    text-align: center; /* Memusatkan teks */
-}
-
-nav ul {
-    list-style-type: none; /* Menghilangkan bullet pada list */
-    padding: 0; /* Menghilangkan padding */
-}
-
-nav ul li {
-    display: inline; /* Menyusun item list secara horizontal */
-    margin-right: 15px; /* Spasi antar item */
-}
-
-nav a {
-    color: white; /* Warna teks tautan */
-    text-decoration: none; /* Menghilangkan garis bawah pada tautan */
-}
-
-main {
-    padding: 20px; /* Padding dalam area utama */
-}
-
-section {
-    margin-bottom: 20px; /* Margin bawah antar section */
-    background-color: white; /* Latar belakang putih */
-    padding: 15px; /* Padding dalam section */
-    border-radius: 5px; /* Sudut melengkung */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bayangan */
-}
-
-footer {
-    text-align: center; /* Memusatkan teks footer */
-    padding: 10px; /* Padding dalam footer */
-    background-color: #333; /* Warna latar belakang footer */
-    color: white; /* Warna teks footer */
-    position: relative; /* Posisi footer */
-    bottom: 0; /* Mengatur posisi footer */
-    width: 100%; /* Lebar penuh untuk footer */
-}
-```
