@@ -3,40 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unduh Video TikTok</title>
-    <link rel="stylesheet" href="styles.css"> <!-- CSS jika diperlukan -->
+    <title>Game Tebak Angka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 100px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Unduh Video TikTok</h1>
-        <p>Masukkan URL video TikTok yang ingin Anda unduh:</p>
-        
-        <form action="/download" method="POST">
-            <label for="tiktok-url">URL Video TikTok:</label>
-            <input type="url" id="tiktok-url" name="tiktok-url" required placeholder="Contoh: https://www.tiktok.com/@username/video/1234567890">
-            <input type="submit" value="Unduh">
-        </form>
+    <h1>Game Tebak Angka</h1>
+    <p>Tebak angka antara 1 hingga 100</p>
+    <input type="number" id="guess" min="1" max="100" placeholder="Tebak...">
+    <button onclick="checkGuess()">Tebak!</button>
 
-        <div id="result" style="display:none;">
-            <h2>Link Unduhan:</h2>
-            <a id="download-link" href="#" download>Download Video</a>
-        </div>
-    </div>
+    <div class="message" id="message"></div>
+    <button id="restart" style="display:none;" onclick="restartGame()">Main Lagi</button>
 
     <script>
-        // Skrip untuk menampilkan link unduhan setelah formulir dikirim
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const url = document.getElementById('tiktok-url').value;
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
 
-            // Logika untuk mendapatkan link unduhan dari server
-            // Di sini Anda perlu menambahkan kode untuk memproses URL
+        function checkGuess() {
+            const userGuess = Number(document.getElementById('guess').value);
+            attempts++;
+            const messageElement = document.getElementById('message');
 
-            // Contoh: Mengupdate link unduhan (hanya sebagai ilustrasi)
-            const downloadLink = document.getElementById('download-link');
-            downloadLink.href = `https://www.example.com/download?url=${encodeURIComponent(url)}`;
-            document.getElementById('result').style.display = 'block';
-        });
+            if (userGuess === randomNumber) {
+                messageElement.textContent = `Selamat! Anda menebak angka ${randomNumber} dalam ${attempts} percobaan.`;
+                document.getElementById('restart').style.display = 'block';
+            } else if (userGuess < randomNumber) {
+                messageElement.textContent = 'Terlalu rendah! Coba lagi.';
+            } else {
+                messageElement.textContent = 'Terlalu tinggi! Coba lagi.';
+            }
+        }
+
+        function restartGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('message').textContent = '';
+            document.getElementById('guess').value = '';
+            document.getElementById('restart').style.display = 'none';
+        }
     </script>
 </body>
 </html>
